@@ -245,145 +245,135 @@ def view_command() -> None:
 @input_exception
 def update_command() -> None:
 	print('--- Обновление записи ---')
-	if len(address_book) == 0:
-		print('Телефонная книга пуста!')
-		return
-	for index, name in enumerate(address_book):
-		print(f'{str(index + 1) + ".":<3} -- {name + ";":<15}')
-	name_choose = int(input('Выберите номер записи для обновления: '))
-	if name_choose > len(address_book):
-		raise ChooseOverweld
-	name = address_book[list(address_book.keys())[name_choose - 1]]
-	print(f'Запись "{name.name.value}" выбрана')
-	for index, number in enumerate(name.phones):
-		print(f'{str(index + 1) + ".":<1} -- {number};')
-	number_choose = int(input('Выберите номер для обновления: '))
-	if number_choose > len(name.phones):
-		raise ChooseOverweld
-	phone = name.phones[number_choose - 1]
-	print(f'Номер "{phone}" выбран')
-	new_phone = add_phone()
-	if new_phone in name.phones:
-		raise PhoneAlreadyExists
-	name.phones[number_choose - 1] = str(new_phone)
-	print(f'Номер "{phone}" обновлён на "{new_phone}"\n---***---')
+	if address_book:
+		for index, name in enumerate(address_book):
+			print(f'{str(index + 1) + ".":<3} -- {name + ";":<15}')
+		name_choose = int(input('Выберите номер записи для обновления: '))
+		if name_choose > len(address_book):
+			raise ChooseOverweld
+		name = address_book[list(address_book.keys())[name_choose - 1]]
+		print(f'Запись "{name.name.value}" выбрана')
+		for index, number in enumerate(name.phones):
+			print(f'{str(index + 1) + ".":<1} -- {number};')
+		number_choose = int(input('Выберите номер для обновления: '))
+		if number_choose > len(name.phones):
+			raise ChooseOverweld
+		phone = name.phones[number_choose - 1]
+		print(f'Номер "{phone}" выбран')
+		new_phone = add_phone()
+		if new_phone in name.phones:
+			raise PhoneAlreadyExists
+		name.phones[number_choose - 1] = str(new_phone)
+		print(f'Номер "{phone}" обновлён на "{new_phone}"\n---***---')
+	else:
+		print('Телефонная книга пуста')
 
 
 @input_exception
 def append_command() -> None:
 	print('--- Добавление номера телефона ---')
-	if len(address_book) == 0:
-		print('Телефонная книга пуста!')
-		return
-	for index, name in enumerate(address_book):
-		print(f'{str(index + 1) + ".":<3} -- {name + ";":<15}')
-	name_choose = int(input('Выберите запись, в которую нужно добавить телефон: '))
+	if address_book:
+		for index, name in enumerate(address_book):
+			print(f'{str(index + 1) + ".":<3} -- {name + ";":<15}')
+		name_choose = int(input('Выберите запись, в которую нужно добавить телефон: '))
 
-	if name_choose > len(address_book):
-		raise ChooseOverweld
-	name = address_book[list(address_book.keys())[name_choose - 1]]
-	print(f'Запись "{name.name.value}" выбрана')
-	phone = add_phone()
-	if phone.value in name.phones:
-		raise PhoneAlreadyExists
-	name.phones.append(phone.value)
-	print(f'Номер "{phone}" добавлен к записи "{name.name.value}"\n---***---')
+		if name_choose > len(address_book):
+			raise ChooseOverweld
+		name = address_book[list(address_book.keys())[name_choose - 1]]
+		print(f'Запись "{name.name.value}" выбрана')
+		phone = add_phone()
+		if phone.value in name.phones:
+			raise PhoneAlreadyExists
+		name.phones.append(phone.value)
+		print(f'Номер "{phone}" добавлен к записи "{name.name.value}"\n---***---')
+	else:
+		print('Телефонная книга пуста')
 
 
 @input_exception
 def delete_phone_command() -> None:
 	print('--- Удаление номера телефона ---')
-	if len(address_book) == 0:
-		print('Телефонная книга пуста!')
-		return
-	for index, name in enumerate(address_book):
-		print(f'{str(index + 1) + ".":<3} -- {name + ";":<15}')
-	name_choose = int(input('Выберите запись из которой нужно удалить телефон: '))
-	if name_choose > len(address_book):
-		raise ChooseOverweld
-	name = address_book[list(address_book.keys())[name_choose - 1]]
-	print(f'Запись "{name.name.value}" выбрана:')
-	for index, number in enumerate(name.phones):
-		print(f'{str(index + 1) + ".":<1} -- {number};')
-	number_choose = int(input('Выберите номер телефона для удаления: '))
-	if number_choose > len(name.phones):
-		raise ChooseOverweld
-	phone = name.phones[number_choose - 1]
-	name.phones.pop(number_choose - 1)
-	print(f'Номер "{phone}" удалён из записи "{name.name.value}".\n---***---')
+	if address_book:
+		for index, name in enumerate(address_book):
+			print(f'{str(index + 1) + ".":<3} -- {name + ";":<15}')
+		name_choose = int(input('Выберите запись из которой нужно удалить телефон: '))
+		if name_choose > len(address_book):
+			raise ChooseOverweld
+		name = address_book[list(address_book.keys())[name_choose - 1]]
+		print(f'Запись "{name.name.value}" выбрана:')
+		for index, number in enumerate(name.phones):
+			print(f'{str(index + 1) + ".":<1} -- {number};')
+		number_choose = int(input('Выберите номер телефона для удаления: '))
+		if number_choose > len(name.phones):
+			raise ChooseOverweld
+		phone = name.phones[number_choose - 1]
+		name.phones.pop(number_choose - 1)
+		print(f'Номер "{phone}" удалён из записи "{name.name.value}".\n---***---')
+	else:
+		print('Телефонная книга пуста')
 
 
 @input_exception
 def delete_contact_command() -> None:
 	print('--- Удаление контакта ---')
-	if len(address_book) == 0:
-		print('Телефонная книга пуста!')
-		return
-	for index, name in enumerate(address_book.keys()):
-		print(f'{str(index + 1) + ".":<3} -- {name + ";":<15}')
-	contact = int(input('Введите порядковый номер контакта, который вы хотели бы удалить: '))
-	for inx, name in enumerate(address_book.keys()):
-		if contact == inx + 1:
-			del address_book[name]
-			print(f'Запись "{name}" удалена.\n---***---')
-			break
-		elif contact > inx + 1:
-			continue
-		else:
-			raise ChooseOverweld
+	if address_book:
+		for index, name in enumerate(address_book.keys()):
+			print(f'{str(index + 1) + ".":<3} -- {name + ";":<15}')
+		contact = int(input('Введите порядковый номер контакта, который вы хотели бы удалить: '))
+		for inx, name in enumerate(address_book.keys()):
+			if contact == inx + 1:
+				del address_book[name]
+				print(f'Запись "{name}" удалена.\n---***---')
+				break
+			elif contact > inx + 1:
+				continue
+			else:
+				raise ChooseOverweld
+	else:
+		print('Телефонная книга пуста')
 
 
 @input_exception
 def search_command() -> None:
-	if len(address_book) == 0:
-		print('Телефонная книга пуста!')
-		return
-	choose = input('Выберите поиск (введите соответствующую цифру):\n'
-	               '1) По имени;\n2) По номеру телефона;\n>>>> ').strip().lower()
-	if choose == '1':
-		print('--- Поиск по имени ---')
-		name = input('Введите имя или фрагмент имени контакта: ').strip()
-		for contact in address_book.keys():
-			if re.search(name, contact):
-				print(f'Найдено: {contact}')
-				print(f'Телефон(ы) контакта: {", ".join(address_book[contact].phones)}')
-				print(
-					f'Дата рождения контакта: {address_book[contact].birthday.value if address_book[contact].birthday.value else "Не указано."}')
-				print('-----')
-	elif choose == '2':
-		print('--- Поиск по номеру телефона ---')
-		phone = input('Введите номер или фрагмент номера телефона: ').strip()
-		for contact in address_book.values():
-			for number in contact.phones:
-				if re.search(phone, number):
-					print(f'Найдено: {contact.name.value}')
-					print(f'Телефон(ы) контакта: {", ".join(contact.phones)}')
-					print(
-						f'Дата рождения контакта: {contact.birthday.value if contact.birthday.value else "Не указано."}')
-					print('-----')
-	print("--- Поиск завершен ---")
+	if address_book:
+		print('--- Поиск контакта ---')
+		search= input('Введите фрагмент имени или номера контакта: ')
+		for name, data in address_book.items():
+			if re.search(search, name):
+				print(f'Найдено в записи "{name}":')
+				print(f'Телефоны контакта: {data.phones}')
+				print(f'Дата рождения контакта: {data.birthday.value}\n----')
+			for number in data.phones:
+				if re.search(search, number):
+					print(f'Найдено в записи "{name}":')
+					print(f'Телефоны контакта: {data.phones}')
+					print(f'Дата рождения контакта: {data.birthday.value}\n----')
+		print(f'--- Поиск завершен ---')
+
+	else:
+		print('Телефонная книга пуста')
 
 
 @input_exception
 def days_to_birthday() -> None:
-	if len(address_book) == 0:
-		print('Телефонная книга пуста!')
-		return
-	print('--- Сколько дней до дня рождения? ---')
-	for index, name in enumerate(address_book.keys()):
-		print(f'{str(index + 1) + ".":<3} -- {name + ";":<15}')
-	name_choose = int(input('Выберите запись, для которой вы хотите получить информацию: '))
-	for inx, name in enumerate(address_book.keys()):
-		if name_choose == inx + 1:
-			if address_book[name].birthday.value:
-				print(f'До дня рождения осталось {address_book[name].days_to_birthday()} дней.\n---***---')
+	if address_book:
+		print('--- Сколько дней до дня рождения? ---')
+		for index, name in enumerate(address_book.keys()):
+			print(f'{str(index + 1) + ".":<3} -- {name + ";":<15}')
+		name_choose = int(input('Выберите запись, для которой вы хотите получить информацию: '))
+		for inx, name in enumerate(address_book.keys()):
+			if name_choose == inx + 1:
+				if address_book[name].birthday.value:
+					print(f'До дня рождения осталось {address_book[name].days_to_birthday()} дней.\n---***---')
+				else:
+					print('Дата рождения не указана.')
+				break
+			elif name_choose > inx + 1:
+				continue
 			else:
-				print('Дата рождения не указана.')
-			break
-		elif name_choose > inx + 1:
-			continue
-		else:
-			raise ChooseOverweld
+				raise ChooseOverweld
+	else:
+		print('Телефонная книга пуста')
 
 
 ...
